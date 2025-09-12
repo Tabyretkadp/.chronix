@@ -37,6 +37,7 @@ void menu() {
 [ 3 ] - Show                                                                            v1.0
 [ 4 ] - Timer
   )";
+std::cout << std::endl;
 }
 
 void printBarChartPercent(const std::vector<Activity> &activities) {
