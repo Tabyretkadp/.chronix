@@ -1,6 +1,6 @@
 <div align="center">
 
-<img src="./Logo.png" alt="Logo" width="200"/>
+<img src="screen/Logo.png" alt="Logo" width="200"/>
 
 <br>
 
@@ -58,3 +58,4 @@
 git clone https://github.com/Tabyretkadp/.chronix.git
 cd .chronix
 g++ -o chronix chronix.cpp
+
