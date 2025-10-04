@@ -20,9 +20,6 @@
 
 ***Chronix*** is a simple console application for time tracking. It helps users see how much time they spend on different activities and visualizes this time in charts.
 
-# Warning
-> I WROTE EVERYTHING IN A SINGLE FILE JUST BECAUSE I CAN AND WANT TO. I WAS TOO LAZY TO DO IT PROPERLY. THIS PROJECT WAS MADE JUST FOR MYSELF AND I DON'T CARE ABOUT ANY RULES — I AM A PUNK.
-
 # Screenshots
 
 <img src="screen/Screenshot_20250912_115420.png" alt="Screen" width="500"/>
@@ -67,6 +64,9 @@
 ```bash
 git clone https://github.com/Tabyretkadp/.chronix.git
 cd .chronix
-g++ -o chronix chronix.cpp
+mkdir build
+cd build
+cmake ..
+make
 
 

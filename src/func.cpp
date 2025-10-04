@@ -7,10 +7,9 @@
 #include <thread>
 #include <vector>
 
-struct Activity {
-  std::string name;
-  int minutes;
-};
+#include "../include/func.hpp"
+
+std::vector<Activity> activities;
 
 void clearConsole() {
 #ifdef _WIN32
@@ -18,26 +17,6 @@ void clearConsole() {
 #else
   std::system("clear");
 #endif
-}
-
-// =========== visual-start
-
-void menu() {
-  std::cout << R"(
-        ░▒▓██████▓▒░░▒▓█▓▒░░▒▓█▓▒░▒▓███████▓▒░ ░▒▓██████▓▒░░▒▓███████▓▒░░▒▓█▓▒░▒▓█▓▒░░▒▓█▓▒░ 
-       ░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░▒▓█▓▒░░▒▓█▓▒░ 
-       ░▒▓█▓▒░      ░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░▒▓█▓▒░░▒▓█▓▒░ 
-       ░▒▓█▓▒░      ░▒▓████████▓▒░▒▓███████▓▒░░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░░▒▓██████▓▒░  
-       ░▒▓█▓▒░      ░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░▒▓█▓▒░░▒▓█▓▒░ 
-░▒▓██▓▒░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░▒▓█▓▒░░▒▓█▓▒░ 
-░▒▓██▓▒░░▒▓██████▓▒░░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░░▒▓█▓▒░░▒▓██████▓▒░░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░▒▓█▓▒░░▒▓█▓▒░ 
-                                                                                             
-[ 1 ] - Add                                                                [ q ] - Skip/qiut
-[ 2 ] - Dell                                                                   [ ^C ] - Exit
-[ 3 ] - Show                                                                            v1.0
-[ 4 ] - Timer
-  )";
-std::cout << std::endl;
 }
 
 void printBarChartPercent(const std::vector<Activity> &activities) {
@@ -74,10 +53,6 @@ void printBarChartPercent(const std::vector<Activity> &activities) {
   ;
 }
 
-// =========== visual-end
-
-// =========== file-start
-
 void saveToFile(const std::string &filename, std::vector<Activity> &active) {
   std::ofstream fout(filename, std::ios::out | std::ios::trunc);
   for (const auto &a : active) {
@@ -111,10 +86,6 @@ void loadFromFile(const std::string &filename, std::vector<Activity> &active) {
       active.push_back({name, minutes});
   }
 }
-
-// =========== file-end
-
-// =========== main-start
 
 void show(std::vector<Activity> &active) {
   std::cout << std::endl;
@@ -248,66 +219,4 @@ void startTimer(std::vector<Activity> &active) {
       break;
     }
   }
-}
-
-// =========== main-end
-
-// =========== START =========== //
-
-int main() {
-  char in_menu;
-  const std::string filename = "data.txt";
-  std::vector<Activity> active;
-
-  loadFromFile(filename, active);
-
-  while (true) {
-    clearConsole();
-    menu();
-    std::cout << std::endl;
-    std::cout << "Input: ";
-    std::cin >> in_menu;
-
-    switch (in_menu) {
-    case '1': {
-      clearConsole();
-      menu();
-      add(active);
-      saveToFile(filename, active);
-      break;
-    }
-    case '2': {
-      clearConsole();
-      menu();
-      dell(active);
-      saveToFile(filename, active);
-      break;
-    }
-    case '3': {
-      clearConsole();
-      menu();
-      printBarChartPercent(active);
-      show(active);
-      char goToNext;
-
-      std::cout << "In '0' to exit: ";
-      std::cin >> goToNext;
-      break;
-    }
-    case '4': {
-      clearConsole();
-      startTimer(active);
-      saveToFile(filename, active);
-      char goToNext;
-
-      std::cout << "In '0' to exit: ";
-      std::cin >> goToNext;
-      break;
-    }
-    default:
-      break;
-    }
-  }
-
-  return 0;
 }
