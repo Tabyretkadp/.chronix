@@ -108,15 +108,14 @@ void add(std::vector<Activity> &active) {
   show(active);
   std::string name;
   int minutes;
+  std::cout << "Name active: ";
+  std::cin >> name;
 
   while (true) {
-    std::cout << "Name active: ";
-    std::cin >> name;
-
     if (name == "q") {
-      break;
+      std::cerr << "pls input names" << std::endl;
+      return;
     }
-
     if (name.find(' ') != std::string::npos) {
       std::cout << "Error! use something like ReadBook" << std::endl;
       ;
@@ -125,20 +124,18 @@ void add(std::vector<Activity> &active) {
     }
   }
 
+  std::cout << "Minutes: ";
+  std::string input;
+  std::cin >> input;
+
   while (true) {
-    std::cout << "Minutes: ";
-    std::string input;
-    std::cin >> input;
-
-    if (input == "q") {
-      break;
-    }
-
     std::stringstream ss(input);
+    if (input == "q") {
+      std::cerr << "pls input minutes" << std::endl;
+      return;
+    }
     if (ss >> minutes && ss.eof() && minutes >= 0) {
       break;
-    } else {
-      std::cout << "Error! in int only" << std::endl;
     }
   }
 
